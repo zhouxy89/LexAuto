@@ -1,0 +1,3364 @@
+<!-- Version Date: 1/28/2018 8:28:02 PM --><!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LexDemo.html ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js" integrity="sha384-s1ITto93iSMDxlp/79qhWHi+LsIi9Gx6yL+cOKDuymvihkfol83TYbLbOw+W/wv4" crossorigin="anonymous"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script><script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script><!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~informed consent-->
+<div id="informedConsent" style="text-align:center;">
+
+<p><strong>CASkade Automation Study</strong></p>
+
+<p>If you wish to participate in this research, please check the below check-box. <!--Otherwise please exit the survey.--></p>
+
+<div style="text-align:center;"><label for="chkClearConsent">I understand and wish to participate</label> <input name="chkClearConsent" onclick="hideConsent()" type="checkbox" /></div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~end informed consent--><!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Instructions-->
+
+<div id="instructions" style="text-align:justify;">
+<p><strong>Instructions:</strong></p>
+
+<p>Imagine you are taking command of a Arleigh Burke-class destroyer – the USS Lexington. As its captain you are directly responsible for the well-being of both the ship and its crew, and in particular avoiding collisions with other ships in your area of operations.</p>
+    
+<p>In this experiment you will be presented with 40 trials. On each trial it is possible a collision could occur between your ship and another cargo ship. As you watch the paths of the ships, if you feel it is possible the two ships will collide, you should pause the scenario and alter the course direction of your ship to avoid the collision. The movement in each scenario is timed, and will automatically end in 40 seconds.</p>
+
+<p>If you decide to turn, you get <b>one</b> chance to steer your ship. In the controls you can:</p>
+<ul>
+     <li> 1. Keep heading straight (0 degrees).</li>
+     <li> 2. Turn left at a narrow angle (-15 degrees) or left at a wide angle (-30 degrees).</li>
+     <li> 3. Turn right at a narrow angle (15 degrees) or at a wide angle (30 degrees). </li>
+</ul>
+<p>In choosing when and where to maneuver, while avoiding a collision is most important, you also need to consider that ideally you want to stay close to the course to your destination as you safely can. You should also adhere to the rules of the road of steering a ship, which dictate that if it is safer to do so, you should pass behind the other ship. </p>
+
+<p>Your ship will be represented by a pink triangular shape. The cargo ship is represented by a red triangular shape. They will both be moving slowly. A green circular marker represents your destination. A black bar is shown that illustrates the minimum safe distance two ships should be apart. In the best case scenario, your ship will arrive at the destination just as time expires.</p>
+
+<p>After each trial you will be given a score based on three factors, safety, procedure (following the rules of the road), and efficiency. <b>Top scores will be anonymously displayed on the leaderboard in the lab!</b></p>
+
+<p>You will be given feedback via the miss distance of the two ships, this will provide the space (in pixels) between the two ships at the closest point. <strong>Larger numbers equal safer maneuvers.</strong></p>
+
+<p>To assist your decision-making process, you have access to the new Collision Avoidance System. This system, <b>CASkade</b>, provides advice for the optimal directional change to avoid a collision and maximize the miss distance. This advice will be presented at the 16 second mark and you will need to make your decision before the 24 second mark. This gives you 8 seconds to make a course correction. You will need to make your decision within this time frame.</p>
+    
+<p>While CASkade provides valuable advice on how to avoid a collision, like automation in the real world, it is not perfect and sometimes may be incorrect. </p>    
+    
+<p>To the right of the display are the controls. In this area, you have the ability to manipulate directional change, these are represented as 5 radio buttons above a steering wheel. You must first press the pause button. THEN Select the appropriate radio button you can command a turn to the left or right. You will see your ship start to turn immediately. Remember, you cannot change your controls unless the game is paused. After you are finished making changes to your controls you may resume the game by pressing the resume game button (same as the pause game button). Below your directional controls, you have the "Pause/Resume Game" button. In the box below, you have the CASkade informational display, which is designed to offer advice on what the safest manuever potentially is. Finally, you have the final miss distance, and current score below.</p>
+<p>Even if you want to continue on a straight path, you still need to pause the game first, then resume it. This will ensure your decision is recorded by the program!</p>
+<p><strong>Note: you cannot change the speed of the Lexington, only the direction the ship is moving!</strong></p>
+
+<p>Before making a course correction, you should keep in mind a few maritime navigation rules – the "rules of the road" for ships.</p>
+<ul>
+	<li>Because the cargo ship is on your right, it has the "right of way" and will not be expected to maneuver to avoid a collision. Therefore, you must maneuver, if it is necessary to avoid a collision </li>
+	<li>If possible to do so safely, you should turn right, to pass behind and not left, to pass in front of the cargo ship </li>
+	<li>If you think these rules cannot be met safely, then you may choose whatever course corrections you feel are safest </li>
+</ul>
+<p>You may adjust your course only once. You should adjust your course if you believe that there is danger of a collision. After making your course corrections, and pressing the "resume" button, the scenario will run to completion. </p>
+<p>If you collide with the cargo ship, the ships will cease movement, and the scenario will pause until the remaining time has expired. Otherwise, after avoiding the cargo ship, your ship will employ an autopilot to make the best possible final course correction in an attempt to arrive at the destination at the correct time. </p>
+<!---------------------------->
+<div style="text-align:center;"><img id="imgInstructions" src="https://i.imgur.com/A0kvqc0.png"></div><!--update this picture Nick!!!!!-->
+<br />
+<div style="text-align:center;">
+<input id="instructionsBtn" onclick="btnClearInructions()" style="text-align:center;" type="button" value="Click here to Proceed" /></div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Instructions-->
+
+<div id="mainContatiner"><!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Game-->
+<div id="game">
+<div id="canvasContainer"><canvas class="canvas" height="600" id="canvas" width="600"> Your browser does not support the HTML5 canvas tag. </canvas> <canvas class="canvas" height="600" id="canvas50px" width="600"></canvas></div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Game--><!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Controls-->
+
+<div id="controlsContainer">
+<div class="controlBox" id="ctrlThrottle" style="display: none;">&nbsp;&nbsp;&nbsp;&nbsp;<strong>Throttle</strong>
+
+<div id="progressBar">
+<div id="progressBarFill">&nbsp;</div>
+</div>
+
+<div class="rdoBtnHome" id="speedN20Div"><input class="ctrlHeading" disabled="true/" id="speedN20" name="speed" onclick="fillSpeedBar(this)" type="radio" value="-20" /> <label class="ctrlHeading" for="speedN20" id="speedN20Lbl">60%</label></div>
+
+<div class="rdoBtnHome" id="speedN10Div"><input class="ctrlHeading" disabled="true/" id="speedN10" name="speed" onclick="fillSpeedBar(this)" type="radio" value="-10" /> <label class="ctrlHeading" for="speedN10" id="speedN10Lbl">70%</label></div>
+
+<div class="rdoBtnHome" id="speed0Div"><input checked="true" class="ctrlHeading" disabled="true/" id="speed0" name="speed" onclick="fillSpeedBar(this)" type="radio" value="0" /> <label class="ctrlHeading" for="speed0" id="speed0Lbl">80%</label></div>
+
+<div class="rdoBtnHome" id="speedP10Div"><input class="ctrlHeading" disabled="true/" id="speedP10" name="speed" onclick="fillSpeedBar(this)" type="radio" value="10" /> <label class="ctrlHeading" for="speedP10" id="speedP10Lbl">90%</label></div>
+
+<div class="rdoBtnHome" id="speedP20Div"><input class="ctrlHeading" disabled="true/" id="speedP20" name="speed" onclick="fillSpeedBar(this)" type="radio" value="20" /> <label class="ctrlHeading" for="speedP20" id="speedP20Lbl">100%</label></div>
+</div>
+<!--End Controls Throttle-->
+    
+
+<div class="controlBox" id="ctrlHeading">&nbsp;&nbsp;&nbsp;&nbsp;<strong>Heading</strong>
+
+<div class="rdoBtnHome" id="headingN30Div"><input class="ctrlHeading" disabled="true/" id="headingN30" name="heading" onclick="changeHeading(this)" type="radio" value="-30" /> <label class="ctrlHeading" for="headingN30" id="headingN30Lbl">-30&deg;</label></div>
+
+<div class="rdoBtnHome" id="headingN15Div"><input class="ctrlHeading" disabled="true/" id="headingN15" name="heading" onclick="changeHeading(this)" type="radio" value="-15" /> <label class="ctrlHeading" for="headingN15" id="headingN15Lbl">-15&deg;</label></div>
+
+<div class="rdoBtnHome" id="heading0Div"><input checked="true" class="ctrlHeading" disabled="true/" id="heading0" name="heading" onclick="changeHeading(this)" type="radio" value="0" /> <label class="ctrlHeading" for="heading0" id="heading0Lbl">0&deg;</label></div>
+
+<div class="rdoBtnHome" id="headingP15Div"><input class="ctrlHeading" disabled="true/" id="headingP15" name="heading" onclick="changeHeading(this)" type="radio" value="15" /> <label class="ctrlHeading" for="headingP15" id="headingP15Lbl">15&deg;</label></div>
+
+<div class="rdoBtnHome" id="headingP30Div"><input class="ctrlHeading" disabled="true/" id="headingP30" name="heading" onclick="changeHeading(this)" type="radio" value="30" /> <label class="ctrlHeading" for="headingP30" id="headingP30Lbl">30&deg;</label></div>
+</div>
+
+<div id="notesOnControls">
+<div id="hiddenTextDiv">
+<p id="txtBanner" style="text-align:center;">Press the button below to Begin</p>
+
+<p id="collisionDetected">&nbsp;</p>
+
+<p id="controlMessage">Press the &quot;Pause Game&quot; button to pause the game while you make changes.<br />
+<br />
+Press it again to resume the game.</p>
+<input disabled="true/" id="resumeGame" onclick="resumePauseGame()" type="button" value="Pause Game" />
+<p id="footNotes">*Default settings: 0&deg; heading, 80% throttle.</p>
+</div>
+</div>
+</div>
+    
+<div id="scoreTime">
+<br />
+<p ><strong>CASkade Recommendation</strong><br />
+<br />
+<div id = "score">
+</div>
+<br />
+<div id = "count">
+</div>
+</div>
+    
+<!--End Controls Container--><input id="btnInitGame" onclick="initGame()" type="button" value="Begin / Next Trial" />
+<div style="clear: both;">&nbsp;</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Controsl--></div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~EndOfTask~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<div id="endOfTask">
+<p><strong>Thank you for your participation!</strong></p>
+<lable>Participant ID </lable><input id="mathLevel" name="mathLevel" required="" type="text" readonly />
+<p>     </p>
+<lable>Total Score </lable><input id ="scoreText" name="scoreText" type="text" readonly />
+<p><strong>Please let the Research Assistant know you are finished, <bold>do not click submit!</bold></strong></p>
+<p><strong>Instructions for the Research Assistant: please change the name of the downloaded file to match the participant number recorded on subject sheet</strong></p>
+<!--What is your gender? <input name="gender" required="" type="radio" value="male" /><lable>Male</lable> <input name="gender" required="" type="radio" value="female" /><lable>Female</lable><br />
+What is your age? <input id="age" max="120" min="0" name="age" required="" type="number" /><br />
+What is your first language? <input id="firstLanguage" name="firstLanguage" required="" type="text" />-->
+<!--<p><strong>The following questions are optional and will not affect your payment or survey completion.</strong></p>-->
+<!--<lable>How many monitors are you using?</lable> <input id="screens" name="screens" type="text" /><br />
+<lable> How many surveys do you typically do at once?</lable> <input id="surveysAtOnce" name="surveysAtOnce" type="text" /><br />
+<lable> How many surveys do you typically do in one week?</lable> <input id="surveysInAWeek" name="surveysInAWeek" type="text" />--> <!--removed this portion b/c not relevant-->
+<!--<p>If you have any feed back that you would like to leave please enter it below.</p>
+<textarea class="results" id="feedBack" name="feedBack" type="text"></textarea>-->    <!--I omitted this part because this is not for the MTURK, we can change it back when the time comes, NF 12/2/18-->
+<br />
+<div style = "text-align:center;"><input id="submitButton" onclick="btnSubmit()" style="text-align:center;" type="button" value="Submit" /></div>
+<br />
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~EndEndOfTask~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~--><!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~results-->
+
+<div id="cumulativeResults"><textarea class="results" id="results" name="results" readonly="readonly" required="" style="width:1000px; height:200px" type="text"></textarea><textarea class="results" id="userInfo" name="userInfo" readonly="readonly" required="" style="width:1000px; height:200px" type="text"></textarea><textarea class="results" id="senarioOrder" name="senarioOrder" readonly="readonly" required="" style="width:1000px; height:200px" type="text"></textarea></div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End results--><!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LexDemo.html END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+<script>
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ controls.js ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Controls~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function fillSpeedBar(self) {
+    //	
+    var elem = document.getElementById("progressBarFill");
+    elem.style.height = (parseInt(self.value, 10) + 80) + '%';
+    //Do soemthing with returned value
+}
+
+function changeHeading(self) {
+    //	
+    //Do soemthing with returned value
+    //update ship image
+    drawShips(getRadioVal('heading'));
+
+    if (gamePaused) { drawBigText("Game Paused"); }
+}
+    
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var pause=0;
+var count=0;
+var counter=setInterval(timer, 1000); 
+var stoped=0
+var pausePointIndex;
+
+var pauseTotal=0;
+var countTotal=0;
+var counterTotal=setInterval(timerTotal, 1000); 
+var stopedTotal=0
+
+function timer()
+{
+  count=count+1;
+  return count;
+}
+    
+function timerTotal()
+{
+  countTotal=countTotal+1;
+  return countTotal;
+}
+
+function StopTotal()
+{
+  clearInterval(counterTotal);
+  window.countTotal=0;
+  window.pauseTotal=0;
+  window.stopedTotal=1
+}
+    
+function ReStartTotal()
+{
+  if (counterTotal)
+  {
+    clearInterval(counterTotal);
+    window.pauseTotal=0;
+    window.countTotal=0;
+    window.stopedTotal=0
+    window.counterTotal=setInterval(timerTotal, 1000); 
+    countTotal=countTotal+1;
+  }
+}
+
+function StopFunction()
+{
+  clearInterval(counter);
+  window.count=0;
+  window.pause=0;
+  window.stoped=1
+}
+
+function ReStartFunction()
+{
+  if (counter)
+  {
+    clearInterval(counter);
+    window.pause=0;
+    window.count=0;
+    window.stoped=0
+    window.counter=setInterval(timer, 1000); 
+    count=count+1;
+  }
+}
+
+function PauseFunction()
+{
+  if (stoped==0)
+  { 
+    if (pause==0) 
+    {
+      clearInterval(counter);
+      pause=1;
+      return;
+    }
+
+  if (pause==1) 
+    {
+      window.counter=setInterval(timer, 1000); 
+      pause=0;
+      return;
+    }
+  }
+  return;
+} 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function resumePauseGame() {
+    //Do soemthing with returned value
+
+    if (gamePaused) {
+//        PauseFunction();
+        gamePaused = false;
+        document.getElementById('resumeGame').value = "Pause Game";
+        lockControls();
+        document.getElementById("resumeGame").disabled = false;
+        clearAllBut50();
+    } else {
+        PauseFunction();
+        gamePaused = true;
+        document.getElementById('resumeGame').value = "Resume Game";
+        drawBigText("Game Paused");
+        unlockControls();
+    }
+}
+
+
+function getRadioVal(name) {
+    var val;
+    // get list of radio buttons with specified name
+    var radios = document.getElementsByName(name);
+
+    // loop through list of radio buttons
+    for (var i = 0, len = radios.length; i < len; i++) {
+        if (radios[i].checked) { // radio checked?
+            val = radios[i].value; // if so, hold its value in val
+            break; // and break out of for loop
+        }
+    }
+    return parseInt(val, 10); // return value of checked radio or undefined if none checked
+}
+
+function lockControls() {
+    $("input[type=radio]").attr('disabled', true);
+    $('#controlMessage').show();
+    document.getElementById("resumeGame").disabled = true;
+}
+
+function unlockControls() {
+    $("input[type=radio]").attr('disabled', false);
+    document.getElementById("resumeGame").disabled = false;
+
+    document.getElementById("speed0").checked = true;
+    fillSpeedBar(document.getElementById("speed0"));
+    document.getElementById("heading0").checked = true;
+}
+
+function setNewCourseViaRadioButtonUpdates(arrayHeadingSpeed) {
+    
+    //set speed button
+    switch (arrayHeadingSpeed[1]) {
+        case .80:
+            document.getElementById("speedN20").checked = true;
+            fillSpeedBar(document.getElementById("speedN20"));
+            break;
+//        case .90:
+//            document.getElementById("speedN10").checked = true;
+//            fillSpeedBar(document.getElementById("speedN10"));
+//            break;
+        case 1.00:
+            document.getElementById("speed0").checked = true;
+            fillSpeedBar(document.getElementById("speed0"));
+            break;
+//        case 1.10:
+//            document.getElementById("speedP10").checked = true;
+//            fillSpeedBar(document.getElementById("speedP10"));
+//            break;
+        case 1.20:
+            document.getElementById("speedP20").checked = true;
+            fillSpeedBar(document.getElementById("speedP20"));
+            break;
+        default:
+            
+    }
+
+    switch (arrayHeadingSpeed[0]) {
+//        case -30:
+//            document.getElementById("headingN30").checked = true;
+//            break;
+        case -15:
+            document.getElementById("headingN15").checked = true;
+            break;
+        case 0:
+            document.getElementById("heading0").checked = true;
+            break;
+        case 15:
+            document.getElementById("headingP15").checked = true;
+            break;
+//        case 30:
+//            document.getElementById("headingP30").checked = true;
+//            break;
+        default:
+            
+    }
+    //set heading button
+}
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Controls~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ controls.js END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Drawing.js ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+function drawShipSelf(ship, numTrailingDots, currentIndex, headingAdj) {
+
+    //draw goal
+    drawCircle(ship.destination[0], ship.destination[1], 4, "green", "", true);
+
+    //draw ship
+    //drawCircle(ship.pathPoints[currentIndex][0], ship.pathPoints[currentIndex][1], 5, "pink", "", true);
+
+    //draw as triangle
+    drawTriangle(ship.pathPoints[currentIndex][0],
+                ship.pathPoints[currentIndex][1],
+                angleCheck(ship.heading + headingAdj),
+                "pink");
+
+    //draw path
+    drawShipPath(ship.pathPoints, currentIndex, numTrailingDots, "blue");
+}
+
+function drawShipConflict(ships, numTrailingDots, currentIndex) {
+    //for one or many ships
+    ships.forEach(function (ship) {
+        //draw ship
+        //drawCircle(ship.pathPoints[currentIndex][0], ship.pathPoints[currentIndex][1], 5, "red", "", true);
+
+        drawTriangle(ship.pathPoints[currentIndex][0],
+            ship.pathPoints[currentIndex][1],
+            ship.heading,
+            "red");
+
+        //draw path
+        drawShipPath(ship.pathPoints, currentIndex, numTrailingDots, "yellow");
+    })
+
+}
+
+function rotateCanvas(degrees) {
+    var ctx = document.getElementById("canvas").getContext("2d");
+    ctx.translate(600 / 2, 600 / 2);
+    ctx.rotate(degrees * Math.PI / 180);
+    ctx.translate(-600 / 2, -600 / 2);
+    // 0 north
+    //90 east
+    //180 south
+    //270 west
+}
+
+function draw50pxLine() {
+    var ctx = document.getElementById("canvas50px").getContext("2d");
+
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "black";
+    ctx.beginPath();
+    ctx.moveTo(50, 50);
+    ctx.lineTo(100, 50);
+    ctx.closePath();
+    ctx.fillStyle = "black";
+    ctx.font = "20px Georgia";
+    ctx.fillText("50 px", 50, 40);
+    ctx.stroke();
+
+    //ctx.beginPath();
+    //ctx.moveTo(50, 100);
+    //ctx.lineTo(150, 100);
+    //ctx.closePath();
+    //ctx.fillStyle = "black";
+    //ctx.font = "20px Georgia";
+    //ctx.fillText("100 px", 50, 90);
+    //ctx.stroke();
+}
+
+function drawCrashText() {
+    var ctx = document.getElementById("canvas50px").getContext("2d");
+    ctx.fillStyle = "black";
+    ctx.font = "50px Georgia";
+    ctx.fillText("You Crashed!!", 150, 300);
+    ctx.stroke();
+}
+
+function drawCloseCallText() {
+    var ctx = document.getElementById("canvas50px").getContext("2d");
+    ctx.fillStyle = "black";
+    ctx.font = "50px Georgia";
+    ctx.fillText("Close Passing!!", 150, 300); // removed b/c not needed in this version-NF,11/2018
+    ctx.stroke();
+}
+
+function drawBigText(theText) {
+    var ctx = document.getElementById("canvas50px").getContext("2d");
+    ctx.fillStyle = "black";
+    ctx.font = "50px Georgia";
+    ctx.fillText(theText, 150, 150);
+    ctx.stroke();
+}
+
+function drawShipPath(pointArray, currentIndex, totalDrawn, color) {
+    'use strict';
+    var i,
+		len = pointArray.length;
+
+        //draw currentndex -1 to total currentIndex - totalDrawn
+        
+    // find max of 0 or current index - 1 - total
+    var lastDrawnIndex = Math.max(0, (currentIndex - totalDrawn));
+    for (i = currentIndex - 1; i >= lastDrawnIndex ; i -= 1) {
+            drawCircle(pointArray[i][0], pointArray[i][1], 2, color, "", true);
+        }
+}
+
+function drawCircle(x, y, radius, color, text, border) {
+    'use strict';
+
+    var ctx = document.getElementById("canvas").getContext("2d");
+
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "black";
+
+    if (border === false) {
+        ctx.lineWidth = 0;
+        ctx.strokeStyle = "rgba(0,0,0,0)";
+    }
+
+    ctx.fillStyle = color;
+
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2 * Math.PI);
+    ctx.fill();
+
+    ctx.fillStyle = "black";
+    ctx.font = "20px Georgia";
+    ctx.fillText(text, x - 10, y + radius + 20);
+
+    ctx.stroke();
+} //end drawCircle
+
+function drawTriangle(x, y, heading, color) {
+    'use strict';
+
+    var ctx = document.getElementById("canvas").getContext("2d");
+
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "black";
+
+    ctx.fillStyle = color;
+
+    //move back say 10 px then over 3
+    var backCenterX,
+        backCenterY,
+        blx,
+        bly,
+        brx,
+        bry,
+		bbrx,
+		bbry,
+		bblx,
+		bbly,
+        temp,
+		height1 = 7,
+		height2 = 8,
+        width = 8;
+
+    temp = movePoint(x, y, oppositeAngle(heading), height1, 0, 0);
+    backCenterX = temp[0];
+    backCenterY = temp[1];
+
+    //get right
+    temp = movePoint(backCenterX, backCenterY, rightPerpAngle(heading), (width / 2), 0, 0);
+    brx = temp[0];
+    bry = temp[1];
+
+    //get left
+    temp = movePoint(backCenterX, backCenterY, leftPerpAngle(heading), (width / 2), 0, 0);
+    blx = temp[0];
+    bly = temp[1];
+
+	//get back right
+	temp = movePoint(brx, bry, oppositeAngle(heading), height2, 0, 0);
+    bbrx = temp[0];
+    bbry = temp[1];
+	
+	//get back left
+	temp = movePoint(blx, bly, oppositeAngle(heading), height2, 0, 0);
+    bblx = temp[0];
+    bbly = temp[1];
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(brx, bry);
+	ctx.lineTo(bbrx, bbry);
+	ctx.lineTo(bblx, bbly);
+    ctx.lineTo(blx, bly);
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.stroke();
+} //end drawCircle
+
+function clearCanvas() {
+	'use strict';
+	var canvas = document.getElementById("canvas"),
+		ctx = canvas.getContext("2d");
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	canvas = document.getElementById("canvas50px"),
+		ctx = canvas.getContext("2d");
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+} // end clearCanvas
+
+function clearAllBut50(){
+	canvas = document.getElementById("canvas50px"),
+	ctx = canvas.getContext("2d");
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	draw50pxLine();
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ANGLE CONVERSION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+function angleCheck(angle) {
+    if (angle >= 360) {
+        while (angle > 360) {
+            angle -= 360;
+        }
+    } else if (angle < 0) {
+        while (angle < 0) {
+            angle += 360;
+        }
+    }
+    return angle;
+}
+
+function rightPerpAngle(angle) {
+    return (angleCheck(angle + 90));
+}
+
+function leftPerpAngle(angle) {
+    return (angleCheck(angle - 90));
+}
+
+function oppositeAngle(angle) {
+    return (angleCheck(angle + 180));
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END ANGLE CONVERSION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Drawing.js END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ generic.js ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+function displayCurrentTime() {
+	'use strict';
+	var date = new Date(),
+		hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+		minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+		seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds(),
+		currentTime = hours + ":" + minutes + ":" + seconds;
+	return currentTime;
+} // end DisplayCurrentTime
+	
+function shuffle(array) {
+	'use strict';
+	var currentIndex = array.length, temporaryValue, randomIndex;
+
+	// While there remain elements to shuffle...
+	while (0 !== currentIndex) {
+
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
+	return array;
+} // end shuffle
+
+function hideConsent() {
+    $('#informedConsent').hide();
+    $('#instructions').show();
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+}
+
+function btnClearInructions() {
+    $('#instructions').hide();
+    $('#mainContatiner').show();
+}
+
+function getBrowserType() {
+    var browserType = "";
+    if ((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1) {
+        browserType = 'Opera';
+    } else if (navigator.userAgent.indexOf("Chrome") != -1) {
+        browserType = 'Chrome';
+    } else if (navigator.userAgent.indexOf("Safari") != -1) {
+        browserType = 'Safari';
+    } else if (navigator.userAgent.indexOf("Firefox") != -1) {
+        browserType = 'Firefox';
+    } else if ((navigator.userAgent.indexOf("MSIE") != -1) || (!!document.documentMode == true)) {
+        browserType = 'IE';
+    } else {
+        browserType = 'unknown';
+    }
+
+    return browserType;
+}
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ generic.js END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LexTurk.js ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+
+	
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PER GAME VAR ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+var rotationType = [0];
+// 0 north
+//90 east
+//180 south
+//270 west
+// one per block
+var shuffeledIndex = 
+    //[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2] for testing scoring on scenario 23
+    //[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4] //scenario 14
+    //[15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15] // scen17
+    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40] 
+    //this will grab the ships info -1
+
+var maxScreen = 20,
+	pxPerFoot = 0,
+	ttc = 0,  //TimeTillCollision
+	secondsPerScreen = 2, //in seconds
+    currentTrial = 0,
+    maxTrials = 40, //one per shuffle index array element, one per ship
+    currentBlock = 0,
+    maxBlocks = 1,
+    trailingDots = 0;
+
+var speedDev = 0,
+    angleDev = 0,
+    timeInterval =(1200 / 20); //constant this times speed equals movement in one screen
+
+var currentScreen = 0,
+    currentSelfShip,
+    currentConflictShips;
+
+var secondsLeft = 0,
+    lastSpeedAdj = 0,
+    minDCPA = 9999,
+    minDCPAscreen = 100,
+    adjustmentsUsed = 0;
+	
+var minDistCountedAsCollision = 15,
+	minDistSafe = 50;
+
+var flagCrash = 0,
+    closeDistance = 0;
+
+var automationAngle = "",
+    automationScore = "",
+    scenarioActual  = 0;
+    pathPointIndex  = 0,
+    score           = 0;
+    
+/// Array for downloading values
+    Array.matrix = function(numrows, numcols, initial) {
+    var arr = [];
+    for (var i = 0; i < numrows; ++i) {
+        var columns = [];
+        for (var j = 0; j < numcols; ++j) {
+            columns[j] = initial;
+        }
+        arr[i] = columns;
+    }
+    return arr;
+}
+
+var stockData = Array.matrix(41,25,"-");
+
+/////////////////////////////////////////////////////////////////////////////////////
+// generating random participant ID
+    now = new Date();
+    var randomNum = '';
+    randomNum += Math.round(Math.random() * 9);
+    randomNum += Math.round(Math.random() * 9);
+    randomNum += now.getTime();
+    window.onload = function () {
+        document.getElementById("mathLevel").value = randomNum;
+    }
+/////////////////////////////////////////////////////////////////////////////////////    
+
+function setBlock() {
+    currentBlock += 1;
+    currentTrial = 0;
+//    shuffeledIndex = shuffle(shuffeledIndex);
+    document.getElementById('senarioOrder').innerHTML += "\n" + currentBlock + ":" + shuffeledIndex;
+	rotateCanvas(rotationType[currentBlock - 1]);
+}
+
+function initGame() {
+    if (currentBlock == 0) { setBlock(); }
+    document.getElementById("collisionDetected").innerHTML = "";
+    document.getElementById("btnInitGame").disabled = true;
+
+    lastSpeedAdj = 0;
+
+    secondsLeft = secondsPerScreen;
+    currentScreen = 0;
+    currentTrial += 1;
+
+    //update Ships
+    currentSelfShip = Object.assign({}, playerShips[shuffeledIndex[(currentTrial - 1)] - 1]); //-1current trial = index -1 make index = zero indexed 
+    
+    currentConflictShips = conflictShips[shuffeledIndex[(currentTrial - 1)] - 1];
+    currentSelfShip.rotation = rotationType[currentBlock - 1];
+
+    //Restart the timers
+    ReStartFunction();
+    ReStartTotal();
+    
+    timeReal = 0;
+    timeReel = 0;
+    
+    //update Console with round information    
+
+    adjustmentsUsed = 0;
+    currentSelfShip.collided = false;
+	
+    minDCPAscreen = 99;
+
+    unlockControls();
+    lockControls();
+    document.getElementById("resumeGame").disabled = false; //just in case
+	document.getElementById('controlMessage').innerHTML = "Press the \"Pause Game\" button to pause the game while you make changes.<br /><br />Press it again to resume the game.";
+    setupRound();
+	
+    runGame();
+}
+    
+function btnSubmit(){
+    downloadCSV({});
+    location.reload();
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END PER GAME VAR 
+
+function recordResults() {
+//    if (currentSelfShip == undefined || currentSelfShip == null) { return; }
+//    var doc = document.getElementById("results");
+//    doc.innerHTML += "\n";
+//    doc.innerHTML += "B" + currentBlock.toString() + "T" + currentTrial.toString() + " = ";
+//    doc.innerHTML += JSON.stringify(currentSelfShip);
+}
+
+var timeReal = 0;
+var timeReel = 0;
+    
+var gamePaused = false;
+function runGame() {
+    //if currentSelfShip.collided than do not update
+
+    //deal with paused game
+	if (gamePaused) {
+		
+		setTimeout(function () {
+			runGame();
+		}, 1000);
+		return;
+	}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    document.getElementById("count").innerHTML = "Miss Distance: " + closeDistance + " | " + "Score: " + score;
+    
+    timeReal = timeReal + 1;
+    timeReel = Math.round(timeReal / 2);
+    
+    var tempTrialNum = currentTrial;
+    
+//-----------------------------------------------------------// Comment if 8 to 16 seconds
+    if ( timeReel <= 12) {
+        document.getElementById("score").innerHTML = "--";
+        document.getElementById("resumeGame").disabled = true;
+    }
+    
+    if (timeReel == 12) {
+       document.getElementById("resumeGame").disabled = false;
+    }
+    
+    if ( timeReel > 12 ) {
+        automationAid(tempTrialNum);
+    }
+    
+    if ( timeReel > 18) {
+        document.getElementById("score").innerHTML = "--";
+        document.getElementById("resumeGame").disabled = true;
+    }
+    
+//-----------------------------------------------------------//
+
+//-----------------------------------------------------------// Uncomment if 8 to 16 seconds
+//    if ( timeReel <= 6) {
+//        document.getElementById("score").innerHTML = "--";
+//    }
+//    
+//    if ( timeReel > 6 ) {
+//        automationAid(tempTrialNum);
+//    }
+//    
+//    if ( timeReel > 12) {
+//        document.getElementById("score").innerHTML = "--";
+//    }
+//-----------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+    
+	if (calculateDCPA() < minDistSafe && currentSelfShip.collided == false){
+        closeDistance = getDistanceBetweenShips();
+//		drawCloseCallText();
+	}
+	
+    if (secondsLeft > 0) {
+		document.getElementById("txtBanner").innerHTML = "Trial: " + currentTrial + " | Block: " + currentBlock;
+
+        // update time in seconds left for next iteration
+        secondsLeft -= 1;
+
+        setTimeout(function () {
+            runGame();
+        }, 1000);
+    } else if (secondsLeft <= 0) { //if the timer has run out
+        var  speedAdj = 1,
+            headingAdj = 0;
+
+		//if dcpa min screen location update radios
+		if (currentScreen == minDCPAscreen + 1 && !currentSelfShip.collided){
+            closeDistance = getDistanceBetweenShips();
+//			setNewCourseViaRadioButtonUpdates(flag);
+		}
+		
+        //collect variables
+		speedAdj = ((getRadioVal('speed'))/ 100);
+        headingAdj = getRadioVal('heading');
+      
+        //recorde values
+        currentSelfShip.headingAdjs.push(headingAdj);
+        currentSelfShip.speedAdjs.push(speedAdj);
+
+        //
+
+        //record is ship has altered course
+        if (speedAdj != lastSpeedAdj || headingAdj != 0 && !currentSelfShip.collided) {
+            //lock controls
+            lockControls()
+			document.getElementById('controlMessage').innerHTML = "<strong>Course changed. Controls locked until next round.</strong>";
+            adjustmentsUsed += 1;
+
+            //set new speed referance point
+            lastSpeedAdj = speedAdj;
+
+            //update heading
+            currentSelfShip.heading = angleCheck(currentSelfShip.heading + headingAdj);
+
+            //update speed
+            currentSelfShip.speed = round(currentSelfShip.baseSpeed + (currentSelfShip.baseSpeed * speedAdj), 3);
+
+            currentSelfShip.hasAlteredCourse = true;
+            //set rest of course from current screen
+
+            updatePathPointsArray(currentScreen - 1);
+            
+            //find min dcpa
+			if (adjustmentsUsed < 2){
+				findMinDCPA();
+			}
+			
+        }
+
+        //reset inputs
+		document.getElementById("heading0").checked  = true;
+
+        if (currentScreen < maxScreen) { //if there are more screens left
+            //increment screens
+            //
+            setupRound();
+            runGame();
+
+        } else { //that was the end of the round
+//            recordResults();
+            
+            //calculating trial variables
+            var lexSpeed = 0;
+            var lexAngle = 0;
+            var cargoSpeed = 0;
+            var cargoAngle = 0;
+            var cargoStart;
+            
+            var lexStart = currentSelfShip.pathPoints[0];
+            var lexStartPoint = lexStart[0] + ";" + lexStart[1]; 
+            
+            lexSpeed = currentSelfShip.baseSpeed;
+            lexAngle = currentSelfShip.baseHeading;
+            
+            currentConflictShips.forEach(function (ship) {
+                cargoSpeed = ship.speed;
+                cargoAngle = ship.heading;
+                cargoStart = ship.pathPoints[0];                
+            })
+            
+            var cargoStartPoint = cargoStart[0] + ";" + cargoStart[1];
+                
+            switch (lexSpeed) {
+                case 0.352: 
+                    lexSpeed = 80;
+                    break;
+                default: 
+                    lexSpeed = 80;
+                    break;
+            }
+            
+            switch (cargoSpeed) {
+                case 0.281: 
+                    cargoSpeed = 60;
+                    break;                
+                case 0.352: 
+                    cargoSpeed = 80;
+                    break;                
+                case 0.422: 
+                    cargoSpeed = 100;
+                    break;
+                default: 
+                    cargoSpeed = 80;
+                    break;
+            }
+                
+            //Angle Calculations & Speed Calculations
+            var headingFlag = 0;
+            var headingFrontBehind = 0;            
+            var speedFlag = 0;
+            var speedUpDown = 0;
+            var headingNew = currentSelfShip.headingAdjs.filter(function(x) { return x; }).pop();
+            var speedNew = currentSelfShip.speedAdjs.filter(function(y) { return y; }).pop();
+            
+            //Angle Calculations
+            if (headingNew != null) {
+                headingFlag = 1;
+                if (headingNew == 15) {
+                    headingFrontBehind = 1;
+                }
+                else if(headingNew == 30){
+                    headingFrontBehind = 2;
+                }
+                else if(headingNew == -15){
+                    headingFrontBehind = -1;
+                }
+                else if(headingNew == -30) {
+                    headingFrontBehind = -2;
+                }
+            }
+            else {headingNew = 0;}
+                
+            //Speed Calculations
+            if (speedNew != null) {
+                speedFlag = 1;
+                speedNew = speedNew * 100;
+                if (speedNew > 0) {
+                    speedUpDown = 1;
+                }
+                else {
+                    speedUpDown = -1;
+                }
+            }
+            else {speedNew = 0;}
+                
+            var automationAngleNum = 0;
+            switch (automationAngle){
+                case "Right turn ideal!":
+                    automationAngleNum = 1;
+                    break;
+                case "Stay on course! (Still pause the game and resume it)":
+                    automationAngleNum = 0;
+                    break;
+                case "Left turn ideal!":
+                    automationAngleNum = -1;
+                    break;
+                default:
+                    automationAngleNum = 0;
+                    break;
+            }
+            
+            //Participant Score assignment        
+            /*if (headingFrontBehind == automationScore) {
+                score = score + 100;   
+            }
+            else {
+                score = score;
+            }*/
+                                                
+           
+                
+            //Time variables
+            var trialActualTime = 0;
+                trialActualTime = timer();
+                
+            var totalTrialTime = 0;
+                totalTrialTime = timerTotal();
+                
+            var timeAfterPause = 0;
+              timeAfterPause = totalTrialTime - trialActualTime;
+                
+            if (trialActualTime == 42) {
+                trialActualTime = 0;
+            }
+            else { pathPointIndex = ((Math.round(trialActualTime/2)) - 1); }
+                
+            var time16Plus = 0;
+            if (trialActualTime >= 16 && trialActualTime <= 24) {
+                time16Plus = 1; 
+            }
+            
+//            var time8Plus = 0;
+//            if (trialActualTime >= 8 && trialActualTime <= 16) {
+//                time8Plus = 1; 
+//            }
+                
+            var ActTrialNum = 0;
+                ActTrialNum = currentTrial;
+                
+                
+          //Participant Score assignment       
+            var penaltyProcedures = 0;
+            var penaltySafety = 0;
+            var penaltyEfficiency = 0;
+            var penaltyPWeight = 0.33;
+            var penaltySWeight = 0.33;
+            var penaltyEWeight = 0.33;
+            var globalPenalty = 0;
+            var responseTime = pathPointIndex;
+            
+            if (headingFrontBehind == -1 || headingFrontBehind == -2) {
+                
+                penaltyProcedures = 1;
+                  
+            }
+            else if (headingFrontBehind == 1 || headingFrontBehind == 2) {
+                
+                penaltyProcedures = 0;
+                
+            }
+            
+            if (headingFrontBehind != 0 && closeDistance <= 60){//change closeDistance<= 60 to whatever number you want to be the maximum MD for a penalty of 0
+                penaltySafety = (1-closeDistance/60);//Change the denominator to match above logic
+            }
+            else{
+                penaltySafety = 0;
+            }
+            
+            
+            if (headingFrontBehind == -1 || headingFrontBehind == 1) {
+                
+                penaltyEfficiency = (20 - responseTime) * (20 - responseTime) * 0.6 / 250;
+                  
+            }
+            else if (headingFrontBehind == -2 || headingFrontBehind == 2) {
+                
+                penaltyEfficiency = (20 - responseTime) * (20 - responseTime) * 1.7 / 250;
+                
+            }
+            
+            globalPenalty = round((penaltyPWeight * penaltyProcedures + penaltySWeight * penaltySafety + penaltyEWeight * penaltyEfficiency), 2);
+            
+            if (headingFrontBehind != 0 && globalPenalty < 1){
+            score = round((score + 1 - globalPenalty),2);
+            }
+            else{
+                score = score;
+            }
+                
+            //Heading declaration
+            stockData[0][0]  = "Participant ID";
+            stockData[0][1]  = "Scenario";
+            stockData[0][2]  = "Trial";
+            stockData[0][3]  = "Conflict Geometry";
+                
+            stockData[0][4]  = "Lex Start Location";
+            stockData[0][5]  = "Cargo Start Location";
+            stockData[0][6]  = "Lex Start Speed";
+            stockData[0][7]  = "Cargo Start Speed";
+            stockData[0][8]  = "Lex Start Angle";
+            stockData[0][9]  = "Cargo Start Angle";
+                
+            stockData[0][10] = "Paused between 16 to 24 seconds?";
+//            stockData[0][10] = "Paused between 8 to 16 seconds?";
+                
+            stockData[0][11] = "Pause Point Index";
+            stockData[0][12] = "Seconds between start and pause";
+            stockData[0][13] = "Seconds between pause and trial end";
+            stockData[0][14] = "Seconds for total trial time";
+                
+            stockData[0][15] = "Angle Adjustment made?";
+            stockData[0][16] = "Turn Front or Behind";
+            stockData[0][17] = "Directional Change";
+            stockData[0][18] = "Speed Adjustment made?";
+            stockData[0][19] = "Adjusted speed";
+            stockData[0][20] = "Decrease or Increase";
+                
+            stockData[0][21] = "CASkade Recommendation";
+            
+            stockData[0][22] = "MD"; //Missed Distance
+            stockData[0][23] = "Collision?";
+            stockData[0][24] = "Score";
+            
+            
+                
+            //Trial variables
+            stockData[currentTrial][0]  = randomNum;
+            stockData[currentTrial][1]  = scenarioActual;
+            stockData[currentTrial][2]  = ActTrialNum;
+            stockData[currentTrial][3]  = lexAngle; //conflict geometry
+                
+            stockData[currentTrial][4]  = lexStartPoint;
+            stockData[currentTrial][5]  = cargoStartPoint;
+            stockData[currentTrial][6]  = lexSpeed;
+            stockData[currentTrial][7]  = cargoSpeed;
+            stockData[currentTrial][8]  = lexAngle;
+            stockData[currentTrial][9]  = cargoAngle;
+            
+            stockData[currentTrial][10] = time16Plus; //Paused after 16 seconds?
+//            stockData[currentTrial][10] = time8Plus; //Paused after 8 seconds?
+                            
+            //Timing Variables
+            stockData[currentTrial][11] = pathPointIndex;
+            stockData[currentTrial][12] = trialActualTime;
+            stockData[currentTrial][13] = timeAfterPause;
+            stockData[currentTrial][14] = totalTrialTime;
+            
+            //Participant Adjustments
+            stockData[currentTrial][15] = headingFlag;
+            stockData[currentTrial][16] = headingFrontBehind;
+            stockData[currentTrial][17] = headingFrontBehind;
+            stockData[currentTrial][18] = speedFlag;
+            stockData[currentTrial][19] = speedUpDown;
+            stockData[currentTrial][20] = speedUpDown;
+            
+            //CASkade recommendation
+            stockData[currentTrial][21] = automationAngleNum;
+                
+            stockData[currentTrial][22] = closeDistance;
+            stockData[currentTrial][23] = flagCrash;
+            stockData[currentTrial][24] = score;
+
+            //clearing variables for next trial
+            automationAngleNum = 0;
+            automationScore = 0;
+            scenarioActual  = 0;
+            closeDistance = 0;
+            flagCrash = 0;
+            headingNew = 0;
+            headingFrontBehind = 0;
+            speedNew = 0;
+            
+            time16Plus = 0;
+//            time8Plus = 0;
+            
+            pathPointIndex = 0;
+            
+                        
+            setPathPointsToZeros();
+            StopTotal();
+            StopFunction();
+			
+
+            //if there are more rounds
+            if (currentTrial < maxTrials) {
+                //if more tirals in block
+                document.getElementById("collisionDetected").innerHTML = "Press the &ldquo;Next Trial&rdquo; button to begin the next round.";
+				document.getElementById('controlMessage').innerHTML = "";
+                document.getElementById("btnInitGame").disabled = false;
+            } else if (currentTrial == maxTrials && currentBlock < maxBlocks) {
+                // if no more trials in block but more blocks
+                setBlock();
+                document.getElementById("btnInitGame").disabled = false;
+            } else if (currentTrial == maxTrials && currentBlock == maxBlocks) {
+                //last block last trial
+                //show EOSQ
+                
+                document.getElementById("scoreText").value = score;
+                $('#mainContatiner').hide();
+                $('#endOfTask').show();
+                $('#submitButton').show();
+                document.getElementById('userInfo').innerHTML = getBrowserType();
+			    $("input[type=radio]").attr('disabled', false);
+            }
+            //reset to next round
+        }
+        //display next points
+    }
+}
+    
+///////////////////////////////////////////////////////////////////////////////////////
+// Download array in CSV format
+    function convertArrayOfObjectsToCSV(args) {
+        var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+        data = args.data || null;
+        if (data == null || !data.length) {
+            return null;
+        }
+
+        columnDelimiter = args.columnDelimiter || ',';
+        lineDelimiter = args.lineDelimiter || '\n';
+
+        keys = Object.keys(data[0]);
+
+        result = '';
+        result += keys.join(columnDelimiter);
+        result += lineDelimiter;
+
+        data.forEach(function(item) {
+            ctr = 0;
+            keys.forEach(function(key) {
+                if (ctr > 0) result += columnDelimiter;
+
+                result += item[key];
+                ctr++;
+            });
+            result += lineDelimiter;
+        });
+
+        return result;
+    }
+
+    function downloadCSV(args) {
+        var data, filename, link;
+
+        var csv = convertArrayOfObjectsToCSV({
+            data: stockData
+        });
+        if (csv == null) return;
+
+        filename = args.filename || randomNum + ' result.csv';
+
+        if (!csv.match(/^data:text\/csv/i)) {
+            csv = 'data:text/csv;charset=utf-8,' + csv;
+        }
+        data = encodeURI(csv);
+
+        link = document.createElement('a');
+        link.setAttribute('href', data);
+        link.setAttribute('download', filename);
+        link.click();
+    }
+    
+///////////////////////////////////////////////////////////////////////////////////////
+
+function setupRound() {
+    currentScreen += 1;
+
+//    //REMOVE
+//    if (currentScreen < maxScreen) { currentScreen = maxScreen; }
+
+
+    secondsLeft = secondsPerScreen;
+    if (calculateDCPA() <= minDistCountedAsCollision) {
+        currentSelfShip.collided = true;
+        document.getElementById("collisionDetected").innerHTML = "You have crashed, after the normal round time has passed you will be able to start the next round.";
+        
+        //Collision?
+        flagCrash = 1;
+        closeDistance = getDistanceBetweenShips();
+        
+        //draw last time to show collision
+        drawShips();
+		drawCrashText();
+		setPathPointsToZeros();
+		
+		unlockControls();
+    	lockControls();
+		document.getElementById("resumeGame").disabled = true;
+		document.getElementById('controlMessage').innerHTML = "";
+    }
+
+    if (!currentSelfShip.collided) {
+        drawShips();
+    } else {
+        //show collision report
+    }
+
+}
+
+function drawShips(headingAdj) {
+	
+	if (headingAdj == undefined){headingAdj = 0;}
+	
+    clearCanvas();
+    draw50pxLine();
+    drawShipConflict(currentConflictShips, trailingDots, (currentScreen -1));
+    drawShipSelf(currentSelfShip, trailingDots, (currentScreen - 1), headingAdj);
+}
+    
+var flag = [];
+function setNewCourse(){
+	//find new course at minc dcpa screen
+	//find shortest avg distance from course using all configurations
+	//speed 60 70 80 90 100
+	//angle -30 -15 0 15 30
+	// = 25 total calculations
+	
+	// speed, heading, sum dcpa
+	var bestSpeed = 999,
+		bestHeading = 999,
+		minSumDcpa = 99999;
+		
+	var speeds = [.80, .90, 1.00, 1.10, 1.20];
+	
+	var headings = [-30, -15, 0, 15, 30];
+	
+	var lastDcpa = 999;
+	
+	for (speed = 0; speed < 5; speed++){
+			for (heading = 0; heading < 5; heading++){
+//				
+				
+				var tempSpeed = speeds[speed];
+				var tempHeading = headings[heading];
+				var newRoute = [];
+				var newSumDist = 99999;
+
+				//calculate new route
+				newRoute = calcHypotheticalNewRoute(minDCPAscreen, tempSpeed, tempHeading);
+				
+//				//sum up dist from new route to old route per point
+//				tempSum = 0;
+//				for (i = 0; i < newRoute.length; i++){
+//					tempSum += getDistanceBetweenPoints(newRoute[i][0], newRoute[i][1], currentSelfShip.pathPoints[maxScreen - minDCPAscreen + i - 1][0], currentSelfShip.pathPoints[maxScreen - minDCPAscreen + i - 1][1]);
+//				}
+////				tempSum = tempSum / newRoute.length;
+
+//								
+				//check to see if new sum less than old
+				var tempLen = newRoute.length - 1;
+				
+				// get dist to destination for each route
+				tempSum = getDistanceBetweenPoints(newRoute[tempLen][0], newRoute[tempLen][1], currentSelfShip.destination[0], currentSelfShip.destination[1]);
+				
+				//pick lowest
+				if (tempSum < minSumDcpa){
+//						
+					minSumDcpa = tempSum;
+					bestSpeed = tempSpeed;
+					bestHeading = tempHeading;
+					flag = [tempHeading, tempSpeed];
+					lastDcpa = tempSum;
+					//
+				}			
+			}
+	}
+	
+
+	
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LexTurk.js END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ math.js ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+function round(int, digits) {
+    return Math.round(int * Math.pow(10, digits)) / Math.pow(10, digits);
+}
+
+function automationAid(currentTrial) {
+	
+     switch (currentTrial) {
+        case 1:
+            automationAngle = "Right turn ideal!";
+            automationScore = 1;
+            scenarioActual  = 8;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+
+        case 2:
+            automationAngle = "Left turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 23;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 3:
+            automationAngle = "Right turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 5;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 4:
+            automationAngle = "Right turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 14;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 5:
+            automationAngle = "Right turn ideal!";
+            automationScore = 1;
+            scenarioActual  = 8;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 6:
+            automationAngle = "Stay on course! (Still pause the game and resume it)";
+            automationScore = 0;
+            scenarioActual  = 9;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 7:
+            automationAngle = "Right turn ideal!";//First failure, correct direction is left
+            automationScore = 1;
+            scenarioActual  = 11;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 8:
+            automationAngle = "Right turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 5;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 9:
+            automationAngle = "Right turn ideal!";
+            automationScore = 1;
+            scenarioActual  = 17;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 10:
+            automationAngle = "Right turn ideal!";
+            automationScore = 1;
+            scenarioActual  = 8;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 11:
+            automationAngle = "Right turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 14;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 12:
+            automationAngle = "Stay on course! (Still pause the game and resume it)";
+            automationScore = 0;
+            scenarioActual  = 19;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 13:
+            automationAngle = "Right turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 26;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 14:
+            automationAngle = "Right turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 14;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 15:
+            automationAngle = "Right turn ideal!";
+            automationScore = 1;
+            scenarioActual  = 17;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 16:
+            automationAngle = "Left turn ideal!";//Second failure trial, correct direction is right
+            automationScore = 1;
+            scenarioActual  = 8;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+
+        case 17:
+            automationAngle = "Right turn ideal!";
+            automationScore = 1;
+            scenarioActual  = 2;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 18:
+            automationAngle = "Right turn ideal!";
+            automationScore = 1;
+            scenarioActual  = 5;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 19:
+            automationAngle = "Right turn ideal!"; 
+            automationScore = -1;
+            scenarioActual  = 26;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 20:
+            automationAngle = "Right turn ideal!";
+            automationScore = 1;
+            scenarioActual  = 5;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 21:
+            automationAngle = "Stay on course! (Still pause the game and resume it)";
+            automationScore = 0;
+            scenarioActual  = 7;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 22:
+            automationAngle = "Right turn ideal!";
+            automationScore = 1;
+            scenarioActual  = 2;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 23:
+            automationAngle = "Right turn ideal!";
+            automationScore = 1;
+            scenarioActual  = 8;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 24:
+            automationAngle = "Right turn ideal!";
+            automationScore = 1;
+            scenarioActual  = 2;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+            
+        case 25:
+            automationAngle = "Right turn ideal!";//Third failure trial, correct direction is left
+            automationScore = 1;
+            scenarioActual  = 11;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 26:
+            automationAngle = "Right turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 5;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 27:
+            automationAngle = "Right turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 14;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 28:
+            automationAngle = "Right turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 17;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 29:
+            automationAngle = "Stay on course! (Still pause the game and resume it)";
+            automationScore = 0;
+            scenarioActual  = 28;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 30:
+            automationAngle = "Right turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 5;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 31:
+            automationAngle = "Left turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 23;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 32:
+            automationAngle = "Stay on course! (Still pause the game and resume it)";
+            automationScore = 0;
+            scenarioActual  = 7;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 33:
+            automationAngle = "Right turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 26;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 34:
+            automationAngle = "Right turn ideal!";
+            automationScore = -1;
+            scenarioActual  = 14;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 35:
+            automationAngle = "Right turn ideal!";
+            automationScore = 1;
+            scenarioActual  = 2;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 36:
+            automationAngle = "Left turn ideal!";//fourth failure trial, correct direction is right
+            automationScore = -1;
+            scenarioActual  = 26;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 37:
+            automationAngle = "Stay on course! (Still pause the game and resume it)";
+            automationScore = 0;
+            scenarioActual  = 19;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 38:
+            automationAngle = "Stay on course! (Still pause the game and resume it)";
+            automationScore = 0;
+            scenarioActual  = 28;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 39:
+            automationAngle = "Stay on course! (Still pause the game and resume it)";
+            automationScore = 0;
+            scenarioActual  = 9;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        case 40:
+            automationAngle = "Right turn ideal!";
+            automationScore = 1;
+            scenarioActual  = 17;
+            document.getElementById("score").innerHTML = automationAngle;
+            break;
+             
+        default:
+            document.getElementById("score").innerHTML = "--";
+            break;
+    }   
+}
+    
+function randDistCentralLimit(sMean, sDev) {
+    // returns a number between -1 and 1 with a variance of 0.236 so adjustment to sDev is done
+    'use strict';
+    var nsamples = 6,
+		run_total = 0,
+		devMultiplier = 0,
+		returnValue = 0,
+		i = 0;
+    sDev = Math.round(sDev / 0.236 * 10000) / 10000;
+    for (i; i < nsamples; i += 1) {
+        run_total += Math.random();
+    }
+    devMultiplier = (run_total - nsamples / 2) / (nsamples / 2);
+    devMultiplier = Math.round(devMultiplier * 10000) / 10000;
+    //	devMultiplier = Math.abs(devMultiplier); //may remove keeps variation positive
+    returnValue = parseInt(sMean, 10) + (sDev * devMultiplier);
+    return [returnValue, devMultiplier];
+} // end randDistCentralLimit
+
+function movePoint(x, y, angle, speed, angleVar, speedVar) {
+    'use strict';
+
+    if (angleVar == undefined) {angleVar = 0;}
+    if (speedVar == undefined) {speedVar = 0;}
+
+    if (speedVar == 0 && angleVar == 0) {
+        var radian = (angle * Math.PI) / 180;
+        x = x + Math.round(speed * Math.cos(radian));
+        y = y + Math.round(speed * Math.sin(radian));
+        return [Math.round(x), Math.round(y)];
+    } else {
+        var speedArray = randDistCentralLimit(speed, speedVar),
+            angleArray = randDistCentralLimit(angle, angleVar),
+            radian = (angleArray[0] * Math.PI) / 180;
+        x = x + Math.round(speedArray[0] * Math.cos(radian));
+        y = y + Math.round(speedArray[0] * Math.sin(radian));
+        return [Math.round(x), Math.round(y), speedArray[1], angleArray[1]];
+    }
+} // end generateNextPoint
+
+function calculateDCPA() {
+    var x1, x2, y1, y2, tempVar;
+    var minDist = 99999;
+
+    x1 = currentSelfShip.pathPoints[currentScreen - 1][0];
+    y1 = currentSelfShip.pathPoints[currentScreen - 1][1];
+
+    currentConflictShips.forEach(function (ship) {
+        tempVar = 0;
+        x2 = ship.pathPoints[currentScreen - 1][0];
+        y2 = ship.pathPoints[currentScreen - 1][1];
+        tempVar = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2))
+        //round 2 digits
+        tempVar = Math.round(tempVar * 100) / 100;
+        if (tempVar < minDist) { minDist = tempVar; }
+    })
+    //    
+    currentSelfShip.dcpas.push(minDist);
+    return minDist;
+}
+
+function calculateDFP() { //distance from path
+    var x1, x2, y1, y2, output, tempVar;
+
+    x1 = currentSelfShip.pathPoints[currentScreen - 1][0];
+    y1 = currentSelfShip.pathPoints[currentScreen - 1][1];
+
+    x2 = currentSelfShip.optimalPath[currentScreen - 1][0];
+    y2 = currentSelfShip.optimalPath[currentScreen - 1][1];
+
+    tempVar = 0;
+    tempVar = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2))
+    //round 2 digits
+    tempVar = Math.round(tempVar * 100) / 100;
+
+    currentSelfShip.dfps.push(tempVar);
+}
+
+function findMinDCPA() {
+    minDCPA = 99999;
+    var tempScreen = currentScreen;
+    //make array of future points
+    while (tempScreen < maxScreen) {
+        var x1 = currentSelfShip.pathPoints[tempScreen - 1][0];
+        var y1 = currentSelfShip.pathPoints[tempScreen - 1][1];
+        currentConflictShips.forEach(function (ship) {
+            tempVar = 0;
+            x2 = ship.pathPoints[tempScreen - 1][0];
+            y2 = ship.pathPoints[tempScreen - 1][1];
+            tempVar = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2))
+            //round 2 digits
+            tempVar = Math.round(tempVar * 100) / 100;
+
+            if (minDCPA > tempVar) {
+                minDCPA = tempVar;
+                minDCPAscreen = tempScreen;
+            }
+            tempScreen++;
+        })
+    }
+    
+    setNewCourse();
+}
+    
+function getDistanceBetweenPoints(x1, y1, x2, y2) {
+    return round(Math.sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2))), 2)
+}
+    
+function getDistanceBetweenShips() {
+    
+    var x1, x2, y1, y2;
+
+    x1 = currentSelfShip.pathPoints[currentScreen - 1][0];
+    y1 = currentSelfShip.pathPoints[currentScreen - 1][1];
+
+    currentConflictShips.forEach(function (ship) {
+        x2 = ship.pathPoints[currentScreen - 1][0];
+        y2 = ship.pathPoints[currentScreen - 1][1];
+    })
+    
+    return round(Math.sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2))), 2)
+}
+
+function updatePathPointsArray(fromIndex) {
+    var range = currentSelfShip.pathPoints.length - 1;
+
+    for (var i = fromIndex; i < range; i += 1) {
+        var tempPoints = [0, 0];
+        var oldXy = currentSelfShip.pathPoints[i];
+        tempPoints = movePoint(oldXy[0], oldXy[1], currentSelfShip.heading, (currentSelfShip.speed * timeInterval), 0, 0);
+        currentSelfShip.pathPoints[i + 1] = [tempPoints[0], tempPoints[1]];
+    }
+}
+
+function calcHypotheticalNewRoute(minDCPAscreen, speed, heading) {
+    var range = currentSelfShip.pathPoints.length - 1;
+    var outputArray = currentSelfShip.pathPoints.slice(0);
+    var hypSpeed = (round(currentSelfShip.baseSpeed * speed, 3) * timeInterval);
+    var hypHeading = angleCheck(currentSelfShip.heading + heading);
+
+    for (var i = (minDCPAscreen - 1); i < range; i += 1) {
+        var tempPoints = [0, 0];
+        var oldXy = outputArray[i];
+        tempPoints = movePoint(oldXy[0], oldXy[1], hypHeading, hypSpeed);
+        outputArray[i + 1] = [tempPoints[0], tempPoints[1]];
+    }
+
+    //
+    return outputArray;
+}
+
+
+function setPathPointsToZeros() {
+    var collisionPoint = currentSelfShip.pathPoints[currentScreen];
+    for (i = currentScreen; i < maxScreen; i++) {
+        currentSelfShip.pathPoints[i] = collisionPoint;
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ math.js END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ship.js ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+//-------------------------------------------------------------------------------Trial 1-----------------------------------------------------------------------------------------------------------------------
+var lexOT1 = {"scenario":1,//Scenario 8
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+
+var cargoOT1 = {"scenario":1,//Scenario 8
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[364,501],[364,481],[364,461],[364,441],[364,421],[364,401],[364,381],[364,361],[364,341],[364,321],[364,301],[364,281],[364,261],[364,241],[364,221],[364,201],[364,181],[364,161],[364,141],[364,121]],
+};
+
+//-------------------------------------------------------------------------------Trial 2-----------------------------------------------------------------------------------------------------------------------    
+var lexOT2 = {"scenario":2,//scenario 23
+"rotation": 0, 
+"heading":325,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":325,
+"pathPoints":[[25,400],[45,386],[65,372],[85,358],[105,344],[125,330],[145,316],[165,302],[185,288],[205,274],[225,260],[245,246],[265,232],[285,218],[305,204],[325,190],[345,176],[365,162],[385,148],[405,134]],
+"optimalPath":[[25,400],[45,386],[65,372],[85,358],[105,344],[125,330],[145,316],[165,302],[185,288],[205,274],[225,260],[245,246],[265,232],[285,218],[305,204],[325,190],[345,176],[365,162],[385,148],[405,134]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[405,134],
+"collided":false,
+};
+    
+var cargoOT2 = {"scenario":2,//scenario 23
+"heading":230,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[573,323],[560,308],[547,293],[534,278],[521,263],[508,248],[494,234],[478,222],[461,211],[443,202],[424,195],[405,190],[385,187],[365,186],[345,187],[325,190],[305,193],[285,196],[265,199],[245,202]],
+};
+
+//-------------------------------------------------------------------------------Trial 3-----------------------------------------------------------------------------------------------------------------------   
+var lexOT3 = {"scenario":3,//Scenario 5
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoOT3 = {"scenario":3,//Scenario 5
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[375,488],[375,468],[375,448],[375,428],[375,408],[375,388],[375,368],[374,348],[372,328],[369,308],[365,288],[360,269],[354,250],[347,231],[339,213],[330,195],[320,178],[310,161],[300,144],[290,127]],
+};
+
+//-------------------------------------------------------------------------------Trial 4-----------------------------------------------------------------------------------------------------------------------    
+var lexOT4 = {"scenario":4,//scenario 14
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"optimalPath":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[373,127],
+"collided":false,
+};
+    
+var cargoOT4 = {"scenario":4,//scenario 14
+"heading":210,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[549,297],[532,287],[515,277],[498,267],[481,257],[463,248],[445,240],[426,233],[407,227],[388,222],[368,218],[348,215],[328,213],[308,212],[288,212],[268,212],[248,212],[228,212],[208,212],[188,212]],
+};
+
+//-------------------------------------------------------------------------------Trial 5-----------------------------------------------------------------------------------------------------------------------
+var lexOT5 = {"scenario":5,//Scenario 8
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+
+var cargoOT5 = {"scenario":5,//Scenario 8
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[364,501],[364,481],[364,461],[364,441],[364,421],[364,401],[364,381],[364,361],[364,341],[364,321],[364,301],[364,281],[364,261],[364,241],[364,221],[364,201],[364,181],[364,161],[364,141],[364,121]],
+};
+
+//-------------------------------------------------------------------------------Trial 6-----------------------------------------------------------------------------------------------------------------------
+var lexOT6 = {"scenario":6,//scenario 9
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoOT6 = {"scenario":6,//scenario 9
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[366,545],[366,525],[366,505],[366,485],[366,465],[366,445],[366,425],[366,405],[366,385],[366,365],[366,345],[366,325],[366,305],[366,285],[366,265],[366,245],[366,225],[366,205],[366,185],[366,165]],
+};
+
+//-------------------------------------------------------------------------------Trial 7, first failure trial-----------------------------------------------------------------------------------------------------------------------
+var lexOT7 = {"scenario":7,//scenario 11
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoOT7 = {"scenario":7,//scenario 11
+"heading":210,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[538,269],[521,259],[504,249],[487,239],[470,229],[452,221],[433,215],[413,211],[393,209],[373,209],[353,211],[333,215],[314,221],[296,229],[279,239],[262,249],[245,259],[228,269],[211,279],[194,289]],
+};
+
+//-------------------------------------------------------------------------------Trial 8-----------------------------------------------------------------------------------------------------------------------    
+var lexOT8 = {"scenario":8,//scenario 5 
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoOT8 = {"scenario":8,//scenario 5 
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[375,488],[375,468],[375,448],[375,428],[375,408],[375,388],[375,368],[374,348],[372,328],[369,308],[365,288],[360,269],[354,250],[347,231],[339,213],[330,195],[320,178],[310,161],[300,144],[290,127]],
+};
+
+//-------------------------------------------------------------------------------Trial 9-----------------------------------------------------------------------------------------------------------------------
+var lexOT9 = {"scenario":9,//scenario 17
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"optimalPath":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[373,127],
+"collided":false,
+};
+    
+var cargoOT9 = {"scenario":9,//scenario 17
+"heading":210,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[560,345],[543,335],[526,325],[509,315],[492,305],[475,295],[458,285],[441,275],[424,265],[407,255],[390,245],[373,235],[356,225],[339,215],[322,205],[305,195],[288,185],[271,175],[254,165],[237,155]],
+};
+
+//-------------------------------------------------------------------------------Trial 10-----------------------------------------------------------------------------------------------------------------------   
+var lexMT10 = {"scenario":10,//scenario 8
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoMT10 = {"scenario":10,//scenario 8
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[364,501],[364,481],[364,461],[364,441],[364,421],[364,401],[364,381],[364,361],[364,341],[364,321],[364,301],[364,281],[364,261],[364,241],[364,221],[364,201],[364,181],[364,161],[364,141],[364,121]],
+};
+
+//-------------------------------------------------------------------------------Trial 11-----------------------------------------------------------------------------------------------------------------------    
+var lexMT11 = {"scenario":11,//scenario 14
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"optimalPath":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[373,127],
+"collided":false,
+};
+    
+var cargoMT11 = {"scenario":11,//scenario 14
+"heading":210,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[549,297],[532,287],[515,277],[498,267],[481,257],[463,248],[445,240],[426,233],[407,227],[388,222],[368,218],[348,215],[328,213],[308,212],[288,212],[268,212],[248,212],[228,212],[208,212],[188,212]],
+};
+
+//-------------------------------------------------------------------------------Trial 12-----------------------------------------------------------------------------------------------------------------------
+var lexMT12 = {"scenario":12,//scenario 19
+"rotation": 0, 
+"heading":270,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":270,
+"pathPoints":[[200,500],[200,476],[200,452],[200,428],[200,404],[200,380],[200,356],[200,332],[200,308],[200,284],[200,260],[200,236],[200,212],[200,188],[200,164],[200,140],[200,116],[200,92],[200,68],[200,44]],
+"optimalPath":[[200,500],[200,476],[200,452],[200,428],[200,404],[200,380],[200,356],[200,332],[200,308],[200,284],[200,260],[200,236],[200,212],[200,188],[200,164],[200,140],[200,116],[200,92],[200,68],[200,44]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[200,44],
+"collided":false,
+};
+    
+var cargoMT12 = {"scenario":12,//scenario 19
+"heading":300,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[385,243],[365,243],[345,243],[325,243],[305,243],[285,243],[265,241],[245,237],[226,231],[208,223],[191,213],[175,201],[160,188],[147,173],[135,157],[125,140],[115,123],[105,106],[95,89],[85,72]],
+};
+
+//-------------------------------------------------------------------------------Trial 13-----------------------------------------------------------------------------------------------------------------------
+var lexMT13 = {"scenario":13,//scenario 26
+"rotation": 0, 
+"heading":270,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":270,
+"pathPoints":[[200,500],[200,476],[200,452],[200,428],[200,404],[200,380],[200,356],[200,332],[200,308],[200,284],[200,260],[200,236],[200,212],[200,188],[200,164],[200,140],[200,116],[200,92],[200,68],[200,44]],
+"optimalPath":[[200,500],[200,476],[200,452],[200,428],[200,404],[200,380],[200,356],[200,332],[200,308],[200,284],[200,260],[200,236],[200,212],[200,188],[200,164],[200,140],[200,116],[200,92],[200,68],[200,44]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[200,44],
+"collided":false,
+};
+    
+var cargoMT13 = {"scenario":13,//scenario 26
+"heading":240,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[530,147],[510,147],[490,147],[470,147],[450,147],[430,147],[410,147],[390,147],[370,146],[350,144],[330,141],[310,137],[291,132],[272,126],[253,119],[235,111],[217,102],[200,92],[183,82],[166,72]],
+};
+
+//-------------------------------------------------------------------------------Trial 14-----------------------------------------------------------------------------------------------------------------------
+var lexMT14 = {"scenario":14,//scenario 14
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"optimalPath":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[373,127],
+"collided":false,
+};
+    
+var cargoMT14 = {"scenario":14,//scenario 14
+"heading":210,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[549,297],[532,287],[515,277],[498,267],[481,257],[463,248],[445,240],[426,233],[407,227],[388,222],[368,218],[348,215],[328,213],[308,212],[288,212],[268,212],[248,212],[228,212],[208,212],[188,212]],
+};
+
+//-------------------------------------------------------------------------------Trial 15-----------------------------------------------------------------------------------------------------------------------
+var lexMT15 = {"scenario":15,//scenario 17
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"optimalPath":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[373,127],
+"collided":false,
+};
+    
+var cargoMT15 = {"scenario":15,//scenario 17 
+"heading":210,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[560,345],[543,335],[526,325],[509,315],[492,305],[475,295],[458,285],[441,275],[424,265],[407,255],[390,245],[373,235],[356,225],[339,215],[322,205],[305,195],[288,185],[271,175],[254,165],[237,155]],
+};
+
+//-------------------------------------------------------------------------------Trial 16, second failure trial-----------------------------------------------------------------------------------------------------------------------
+var lexMT16 = {"scenario":16,//scenario 8
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoMT16 = {"scenario":16,//scenario 8
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[364,501],[364,481],[364,461],[364,441],[364,421],[364,401],[364,381],[364,361],[364,341],[364,321],[364,301],[364,281],[364,261],[364,241],[364,221],[364,201],[364,181],[364,161],[364,141],[364,121]],
+};
+
+//-------------------------------------------------------------------------------Trial 17-----------------------------------------------------------------------------------------------------------------------  
+var lexMT17 = {"scenario":17, //scenario 2
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoMT17 = {"scenario":17,//scenario 2
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[399,462],[399,442],[399,422],[399,402],[399,382],[399,362],[397,342],[393,322],[387,303],[379,285],[369,268],[357,252],[344,237],[329,224],[313,212],[296,202],[279,192],[262,182],[245,172],[228,162]],
+};
+    
+//-------------------------------------------------------------------------------Trial 18-----------------------------------------------------------------------------------------------------------------------   
+var lexMT18 = {"scenario":18,//scenario 5 
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoMT18 = {"scenario":18,//scenario 5 
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[375,488],[375,468],[375,448],[375,428],[375,408],[375,388],[375,368],[374,348],[372,328],[369,308],[365,288],[360,269],[354,250],[347,231],[339,213],[330,195],[320,178],[310,161],[300,144],[290,127]],
+};
+
+//-------------------------------------------------------------------------------Trial 19-----------------------------------------------------------------------------------------------------------------------    
+var lexCR19 = {"scenario":19, //scenario 26
+"rotation": 0, 
+"heading":270,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":270,
+"pathPoints":[[200,500],[200,476],[200,452],[200,428],[200,404],[200,380],[200,356],[200,332],[200,308],[200,284],[200,260],[200,236],[200,212],[200,188],[200,164],[200,140],[200,116],[200,92],[200,68],[200,44]],
+"optimalPath":[[200,500],[200,476],[200,452],[200,428],[200,404],[200,380],[200,356],[200,332],[200,308],[200,284],[200,260],[200,236],[200,212],[200,188],[200,164],[200,140],[200,116],[200,92],[200,68],[200,44]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[200,44],
+"collided":false,
+};
+    
+var cargoCR19 = {"scenario":19,//scenario 26
+"heading":240,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[530,147],[510,147],[490,147],[470,147],[450,147],[430,147],[410,147],[390,147],[370,146],[350,144],[330,141],[310,137],[291,132],[272,126],[253,119],[235,111],[217,102],[200,92],[183,82],[166,72]],
+};
+
+//-------------------------------------------------------------------------------Trial 20-----------------------------------------------------------------------------------------------------------------------
+var lexCR20 = {"scenario":20, //scenario 5
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoCR20 = {"scenario":20,//scenario 5
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[375,488],[375,468],[375,448],[375,428],[375,408],[375,388],[375,368],[374,348],[372,328],[369,308],[365,288],[360,269],[354,250],[347,231],[339,213],[330,195],[320,178],[310,161],[300,144],[290,127]],
+};
+
+//-------------------------------------------------------------------------------Trial 21-----------------------------------------------------------------------------------------------------------------------
+var lexCR21 = {"scenario":21, //scenario 7
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+
+var cargoCR21 = {"scenario":21,//scenario 7
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[277,442],[277,422],[277,402],[277,382],[277,362],[277,342],[277,322],[277,302],[277,282],[277,262],[277,242],[277,222],[277,202],[277,182],[277,162],[277,142],[277,122],[277,102],[277,82],[277,62]],
+};
+
+//-------------------------------------------------------------------------------Trial 22-----------------------------------------------------------------------------------------------------------------------
+var lexCR22 = {"scenario":22, //scenario 2
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoCR22 = {"scenario":22,//scenario 2
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[399,462],[399,442],[399,422],[399,402],[399,382],[399,362],[397,342],[393,322],[387,303],[379,285],[369,268],[357,252],[344,237],[329,224],[313,212],[296,202],[279,192],[262,182],[245,172],[228,162]],
+};
+
+//-------------------------------------------------------------------------------Trial 23-----------------------------------------------------------------------------------------------------------------------
+var lexCR23 = {"scenario":23,//scenario 8
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoCR23 = {"scenario":23,//scenario 8
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[364,501],[364,481],[364,461],[364,441],[364,421],[364,401],[364,381],[364,361],[364,341],[364,321],[364,301],[364,281],[364,261],[364,241],[364,221],[364,201],[364,181],[364,161],[364,141],[364,121]],
+};
+
+//-------------------------------------------------------------------------------Trial 24-----------------------------------------------------------------------------------------------------------------------
+var lexCR24 = {"scenario":24,//scenario 2
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoCR24 = {"scenario":24,//scenario 2
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[399,462],[399,442],[399,422],[399,402],[399,382],[399,362],[397,342],[393,322],[387,303],[379,285],[369,268],[357,252],[344,237],[329,224],[313,212],[296,202],[279,192],[262,182],[245,172],[228,162]],
+};
+
+//-------------------------------------------------------------------------------Trial 25, third failure trial-----------------------------------------------------------------------------------------------------------------------
+var lexCR25 = {"scenario":25,//scenario 11
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoCR25 = {"scenario":25,//scenario 11
+"heading":210,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[538,269],[521,259],[504,249],[487,239],[470,229],[452,221],[433,215],[413,211],[393,209],[373,209],[353,211],[333,215],[314,221],[296,229],[279,239],[262,249],[245,259],[228,269],[211,279],[194,289]],
+};
+
+//-------------------------------------------------------------------------------Trial 26-----------------------------------------------------------------------------------------------------------------------
+var lexCR26 = {"scenario":26,//scenario 5
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoCR26 = {"scenario":26,//scenario 5
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[375,488],[375,468],[375,448],[375,428],[375,408],[375,388],[375,368],[374,348],[372,328],[369,308],[365,288],[360,269],[354,250],[347,231],[339,213],[330,195],[320,178],[310,161],[300,144],[290,127]],
+};
+
+//-------------------------------------------------------------------------------Trial 27-----------------------------------------------------------------------------------------------------------------------
+var lexCR27 = {"scenario":27,//scenario 14
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"optimalPath":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[373,127],
+"collided":false,
+};
+    
+var cargoCR27 = {"scenario":27,//scenario 14
+"heading":210,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[549,297],[532,287],[515,277],[498,267],[481,257],[463,248],[445,240],[426,233],[407,227],[388,222],[368,218],[348,215],[328,213],[308,212],[288,212],[268,212],[248,212],[228,212],[208,212],[188,212]],
+};
+
+//-------------------------------------------------------------------------------Trial 28-----------------------------------------------------------------------------------------------------------------------
+var lexCR28 = {"scenario":28,//scenario 17
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"optimalPath":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[373,127],
+"collided":false,
+};
+    
+var cargoCR28 = {"scenario":28,//scenario 17 
+"heading":210,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[560,345],[543,335],[526,325],[509,315],[492,305],[475,295],[458,285],[441,275],[424,265],[407,255],[390,245],[373,235],[356,225],[339,215],[322,205],[305,195],[288,185],[271,175],[254,165],[237,155]],
+};
+
+//-------------------------------------------------------------------------------Trial 29-----------------------------------------------------------------------------------------------------------------------
+var lexCR29 = {"scenario":29,//scenario 28
+"rotation": 0, 
+"heading":300,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":300,
+"pathPoints":[[50,500],[62,479],[74,458],[86,437],[98,416],[110,395],[122,374],[134,353],[146,332],[158,311],[170,290],[182,269],[194,248],[206,227],[218,206],[230,185],[242,164],[254,143],[266,122],[278,101]],
+"optimalPath":[[50,500],[62,479],[74,458],[86,437],[98,416],[110,395],[122,374],[134,353],[146,332],[158,311],[170,290],[182,269],[194,248],[206,227],[218,206],[230,185],[242,164],[254,143],[266,122],[278,101]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[278,101],
+"collided":false,
+};
+    
+var cargoCR29 = {"scenario":29,//scenario 28
+"heading":210,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[501,221],[484,211],[467,201],[450,191],[433,181],[416,171],[399,161],[382,151],[364,142],[346,134],[327,127],[308,121],[289,116],[269,112],[249,109],[229,107],[209,106],[189,106],[169,106],[149,106]],
+};
+ 
+//-------------------------------------------------------------------------------Trial 30-----------------------------------------------------------------------------------------------------------------------
+var lexCR30 = {"scenario":30,//scenario 5
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoCR30 = {"scenario":30,//scenario 5
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[375,488],[375,468],[375,448],[375,428],[375,408],[375,388],[375,368],[374,348],[372,328],[369,308],[365,288],[360,269],[354,250],[347,231],[339,213],[330,195],[320,178],[310,161],[300,144],[290,127]],
+};
+
+//-------------------------------------------------------------------------------Trial 31-----------------------------------------------------------------------------------------------------------------------
+var lexCR31 = {"scenario":31,//scenario 23
+"rotation": 0, 
+"heading":325,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":325,
+"pathPoints":[[25,400],[45,386],[65,372],[85,358],[105,344],[125,330],[145,316],[165,302],[185,288],[205,274],[225,260],[245,246],[265,232],[285,218],[305,204],[325,190],[345,176],[365,162],[385,148],[405,134]],
+"optimalPath":[[25,400],[45,386],[65,372],[85,358],[105,344],[125,330],[145,316],[165,302],[185,288],[205,274],[225,260],[245,246],[265,232],[285,218],[305,204],[325,190],[345,176],[365,162],[385,148],[405,134]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[405,134],
+"collided":false,
+};
+    
+var cargoCR31 = {"scenario":31,//scenario 23
+"heading":230,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[573,323],[560,308],[547,293],[534,278],[521,263],[508,248],[494,234],[478,222],[461,211],[443,202],[424,195],[405,190],[385,187],[365,186],[345,187],[325,190],[305,193],[285,196],[265,199],[245,202]],
+};
+
+//-------------------------------------------------------------------------------Trial 32-----------------------------------------------------------------------------------------------------------------------
+var lexCR32 = {"scenario":32,//scenario 7
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+
+var cargoCR32 = {"scenario":32,//scenario 7
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[277,442],[277,422],[277,402],[277,382],[277,362],[277,342],[277,322],[277,302],[277,282],[277,262],[277,242],[277,222],[277,202],[277,182],[277,162],[277,142],[277,122],[277,102],[277,82],[277,62]],
+};
+
+//-------------------------------------------------------------------------------Trial 33-----------------------------------------------------------------------------------------------------------------------
+var lexCR33 = {"scenario":33,//scenario 26
+"rotation": 0, 
+"heading":270,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":270,
+"pathPoints":[[200,500],[200,476],[200,452],[200,428],[200,404],[200,380],[200,356],[200,332],[200,308],[200,284],[200,260],[200,236],[200,212],[200,188],[200,164],[200,140],[200,116],[200,92],[200,68],[200,44]],
+"optimalPath":[[200,500],[200,476],[200,452],[200,428],[200,404],[200,380],[200,356],[200,332],[200,308],[200,284],[200,260],[200,236],[200,212],[200,188],[200,164],[200,140],[200,116],[200,92],[200,68],[200,44]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[200,44],
+"collided":false,
+};
+    
+var cargoCR33 = {"scenario":33,//scenario 26
+"heading":240,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[530,147],[510,147],[490,147],[470,147],[450,147],[430,147],[410,147],[390,147],[370,146],[350,144],[330,141],[310,137],[291,132],[272,126],[253,119],[235,111],[217,102],[200,92],[183,82],[166,72]],
+};
+    
+//-------------------------------------------------------------------------------Trial 34-----------------------------------------------------------------------------------------------------------------------
+var lexCR34 = {"scenario":34,//scenario 14
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"optimalPath":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[373,127],
+"collided":false,
+};
+    
+var cargoCR34 = {"scenario":34,//scenario 14
+"heading":210,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[549,297],[532,287],[515,277],[498,267],[481,257],[463,248],[445,240],[426,233],[407,227],[388,222],[368,218],[348,215],[328,213],[308,212],[288,212],[268,212],[248,212],[228,212],[208,212],[188,212]],
+};
+
+//-------------------------------------------------------------------------------Trial 35-----------------------------------------------------------------------------------------------------------------------    
+var lexCR35 = {"scenario":35,//scenario 2
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoCR35 = {"scenario":35,//scenario 2
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[399,462],[399,442],[399,422],[399,402],[399,382],[399,362],[397,342],[393,322],[387,303],[379,285],[369,268],[357,252],[344,237],[329,224],[313,212],[296,202],[279,192],[262,182],[245,172],[228,162]],
+};
+
+//-------------------------------------------------------------------------------Trial 36, fourth failure trial-----------------------------------------------------------------------------------------------------------------------    
+var lexCR36 = {"scenario":36,//scenario 26
+"rotation": 0, 
+"heading":270,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":270,
+"pathPoints":[[200,500],[200,476],[200,452],[200,428],[200,404],[200,380],[200,356],[200,332],[200,308],[200,284],[200,260],[200,236],[200,212],[200,188],[200,164],[200,140],[200,116],[200,92],[200,68],[200,44]],
+"optimalPath":[[200,500],[200,476],[200,452],[200,428],[200,404],[200,380],[200,356],[200,332],[200,308],[200,284],[200,260],[200,236],[200,212],[200,188],[200,164],[200,140],[200,116],[200,92],[200,68],[200,44]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[200,44],
+"collided":false,
+};
+    
+var cargoCR36 = {"scenario":36,//scenario 26
+"heading":240,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[530,147],[510,147],[490,147],[470,147],[450,147],[430,147],[410,147],[390,147],[370,146],[350,144],[330,141],[310,137],[291,132],[272,126],[253,119],[235,111],[217,102],[200,92],[183,82],[166,72]],
+};
+
+//-------------------------------------------------------------------------------Trial 37-----------------------------------------------------------------------------------------------------------------------   
+var lexCR37 = {"scenario":37,//scenario 19
+"rotation": 0, 
+"heading":270,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":270,
+"pathPoints":[[200,500],[200,476],[200,452],[200,428],[200,404],[200,380],[200,356],[200,332],[200,308],[200,284],[200,260],[200,236],[200,212],[200,188],[200,164],[200,140],[200,116],[200,92],[200,68],[200,44]],
+"optimalPath":[[200,500],[200,476],[200,452],[200,428],[200,404],[200,380],[200,356],[200,332],[200,308],[200,284],[200,260],[200,236],[200,212],[200,188],[200,164],[200,140],[200,116],[200,92],[200,68],[200,44]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[200,44],
+"collided":false,
+};
+
+var cargoCR37 = {"scenario":37,//scenario 19
+"heading":300,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[385,243],[365,243],[345,243],[325,243],[305,243],[285,243],[265,241],[245,237],[226,231],[208,223],[191,213],[175,201],[160,188],[147,173],[135,157],[125,140],[115,123],[105,106],[95,89],[85,72]],
+};
+
+//-------------------------------------------------------------------------------Trial 38-----------------------------------------------------------------------------------------------------------------------   
+var lexCR38 = {"scenario":38,//scenario 28
+"rotation": 0, 
+"heading":300,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":300,
+"pathPoints":[[50,500],[62,479],[74,458],[86,437],[98,416],[110,395],[122,374],[134,353],[146,332],[158,311],[170,290],[182,269],[194,248],[206,227],[218,206],[230,185],[242,164],[254,143],[266,122],[278,101]],
+"optimalPath":[[50,500],[62,479],[74,458],[86,437],[98,416],[110,395],[122,374],[134,353],[146,332],[158,311],[170,290],[182,269],[194,248],[206,227],[218,206],[230,185],[242,164],[254,143],[266,122],[278,101]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[278,101],
+"collided":false,
+};
+    
+var cargoCR38 = {"scenario":38,//scenario 28
+"heading":210,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[501,221],[484,211],[467,201],[450,191],[433,181],[416,171],[399,161],[382,151],[364,142],[346,134],[327,127],[308,121],[289,116],[269,112],[249,109],[229,107],[209,106],[189,106],[169,106],[149,106]],
+};
+
+//-------------------------------------------------------------------------------Trial 39-----------------------------------------------------------------------------------------------------------------------       
+var lexCR39 = {"scenario":39,//scenario 9
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"optimalPath":[[75,450],[92,433],[109,416],[126,399],[143,382],[160,365],[177,348],[194,331],[211,314],[228,297],[245,280],[262,263],[279,246],[296,229],[313,212],[330,195],[347,178],[364,161],[381,144],[398,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[398,127],
+"collided":false,
+};
+    
+var cargoCR39 = {"scenario":39,//scenario 9
+"heading":270,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[366,545],[366,525],[366,505],[366,485],[366,465],[366,445],[366,425],[366,405],[366,385],[366,365],[366,345],[366,325],[366,305],[366,285],[366,265],[366,245],[366,225],[366,205],[366,185],[366,165]],
+};
+    
+//-------------------------------------------------------------------------------Trial 40-----------------------------------------------------------------------------------------------------------------------   
+var lexCR40 = {"scenario":40,//scenario 17
+"rotation": 0, 
+"heading":315,
+"knots":24,
+"name": "lex",
+"baseSpeed":0.338,
+"speed":0.352,
+"baseHeading":315,
+"pathPoints":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"optimalPath":[[50,450],[67,433],[84,416],[101,399],[118,382],[135,365],[152,348],[169,331],[186,314],[203,297],[220,280],[237,263],[254,246],[271,229],[288,212],[305,195],[322,178],[339,161],[356,144],[373,127]],
+"headingAdjs":[],
+"speedAdjs":[],
+"dcpas":[],
+"dfps":[],
+"hasAlteredCourse":false,
+"destination":[373,127],
+"collided":false,
+};
+    
+var cargoCR40 = {"scenario":40,//scenario 17
+"heading":210,
+"knots":0.282,
+"name": "cargo",
+"speed":0.281,
+"pathPoints":[[560,345],[543,335],[526,325],[509,315],[492,305],[475,295],[458,285],[441,275],[424,265],[407,255],[390,245],[373,235],[356,225],[339,215],[322,205],[305,195],[288,185],[271,175],[254,165],[237,155]],
+};
+
+
+var playerShips = [lexOT1, lexOT2, lexOT3, lexOT4, lexOT5, lexOT6, lexOT7, lexOT8, lexOT9, lexMT10, lexMT11, lexMT12, lexMT13, lexMT14, lexMT15, lexMT16, lexMT17, lexMT18, lexCR19, lexCR20, lexCR21, lexCR22, lexCR23, lexCR24, lexCR25, lexCR26, lexCR27, lexCR28, lexCR29, lexCR30, lexCR31, lexCR32, lexCR33, lexCR34, lexCR35, lexCR36, lexCR37, lexCR38, lexCR39, lexCR40];
+
+var conflictShips = [[cargoOT1], [cargoOT2], [cargoOT3], [cargoOT4], [cargoOT5], [cargoOT6], [cargoOT7], [cargoOT8], [cargoOT9], [cargoMT10], [cargoMT11], [cargoMT12], [cargoMT13], [cargoMT14], [cargoMT15], [cargoMT16], [cargoMT17], [cargoMT18], [cargoCR19], [cargoCR20], [cargoCR21], [cargoCR22], [cargoCR23], [cargoCR24], [cargoCR25], [cargoCR26], [cargoCR27], [cargoCR28], [cargoCR29], [cargoCR30], [cargoCR31], [cargoCR32], [cargoCR33], [cargoCR34], [cargoCR35], [cargoCR36], [cargoCR37], [cargoCR38], [cargoCR39], [cargoCR40]];
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ship.js END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+</script>
+<style type="text/css">/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ controls.css ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+#btnInitGame{
+	margin: 10px 0px 10px 180px; 
+	border-radius: 8px;
+}
+
+#resumeGame{
+	border-radius: 8px;
+}
+
+#controlsContainer {
+	border: 2px solid gray;
+	max-height: 600px;
+	min-height: 328px;
+	width: 408px;
+	border-radius: 25px;
+	background-color: darkgray;
+	display: inline-block;
+	margin: 0px 0px 0px 20px;
+	position: relative;
+        
+
+	
+}
+    
+#ctrlThrottle {
+	border: 2px solid gray;
+	height: 305px;
+	width:90px;
+	float:left; 
+	margin: 10px;
+	border-radius: 25px;
+	position: relative;
+	box-shadow: inset 0 0 0 1000px rgba(255,255,255,.7);
+}
+
+#ctrlHeading {
+	position: relative;
+	box-shadow: inset 0 0 0 1000px rgba(255,255,255,.7);
+	background-image: url(https://i.imgur.com/DSOuKcQ.png);
+	background-position: center;
+	border: 2px solid gray;
+	height: 130px;
+	width:280px;
+	display: inline-block;
+	margin: 10px 0px 10px 60px;
+	border-radius: 25px;
+        
+}
+
+#controlsContainer * > label{
+	font-size: 110%;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.rdoBtnHome {
+	border: 2px solid darkgray;
+	display: inline-block;
+	position: absolute;
+	height:12px;
+	width: 12px;
+	border-radius: 25px;
+}
+
+#controlsContainer * >  input[type=radio]:checked + label {
+	 color: #f00;
+}
+
+.ctrlHeading {
+	display: inline-block;
+	position: absolute;
+	margin: auto;
+        
+}
+    
+#scoreTime {
+	position: relative;
+	box-shadow: inset 0 0 0 1000px rgba(255,255,255,.7);
+	background-position: center;
+	border: 2px solid gray;
+	height: 175px;
+	width:280px;
+	display: inline-block;
+	margin: 10px 10px 10px 90px;
+	border-radius: 25px;
+    text-align: center;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Control Notes~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#notesOnControls {
+	border: 2px solid gray;
+	max-height: 430px;
+	width:280px;
+	margin: 10px 0px 10px 60px;
+	border-radius: 25px;
+	box-shadow: inset 0 0 0 1000px rgba(255,255,255,.7);
+	text-align: center;
+	min-height: 160px;
+	float:left; 
+        
+        
+        
+}
+
+#hiddenTextDiv{
+/*	border: 2px solid black;*/
+	min-height: 140px;
+	width: 260px;
+	margin: 8px;
+	max-height: 430px;
+}
+
+#controlMessage{
+	display: block;
+}
+    
+#score{
+	display: block;
+    text-align: center;
+    color: red;
+    /*color: darkcyan;*/
+    font-size: 25px;
+}
+
+ #count{
+    display: block;
+    text-align: center;
+}
+
+#footNotes{
+	font-size: 85%;
+	font-style: italic;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Control Notes~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Speed Controls~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#progressBar{
+	border: 2px solid black;
+	height: 270px;
+	width: 30px;
+	border-radius: 10px;
+	position: absolute;
+	left: 8px;
+	
+}
+
+#progressBarFill{
+	height: 80%;
+	width: 30px;
+	background-color: green;
+	position: absolute;
+	bottom: 0px;
+}
+
+#speedN20Div {
+	bottom: 165px;
+    right: 58px;
+}
+
+#speedN10Div {
+  bottom: 190px;
+    right: 58px;
+}
+
+#speed0Div {
+  bottom: 215px;
+    right: 58px;
+}
+
+#speedP10Div {
+  bottom: 240px;
+    right: 58px;
+}
+
+#speedP20Div {
+  bottom: 265px;
+    right: 58px;
+}
+
+#speedN20Lbl {
+  bottom: -4px;
+  right: -55px;
+}
+
+#speedN10Lbl {
+  bottom: -4px;
+  right: -55px;
+}
+
+#speed0Lbl {
+  bottom: -4px;
+  right: -55px;
+}
+
+#speedP10Lbl {
+  bottom: -4px;
+  right: -55px;
+}
+
+#speedP20Lbl {
+  bottom: -4px;
+  right: -55px;
+}
+
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Speed Controls~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Heading Controls~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#headingN30Div {
+	bottom: 35px;
+    left: 70px;
+}
+
+#headingN15Div {
+  bottom: 63px;
+  left: 95px;
+}
+
+#heading0Div {
+  bottom: 73px;
+  left: 133px;
+}
+
+#headingP15Div {
+  bottom: 63px;
+  right: 89px;
+}
+
+#headingP30Div {
+  bottom: 35px;
+  right: 61px;
+}
+
+#headingN30Lbl {
+  bottom: -20px;
+  left: -10px;
+}
+
+#headingN15Lbl {
+  bottom: -20px;
+  left: -10px;
+}
+
+#heading0Lbl {
+  bottom: -20px;
+  left: 1px;
+}
+
+#headingP15Lbl {
+  bottom: -20px;
+  right: -10px;
+}
+
+#headingP30Lbl {
+  bottom: -20px;
+  right: -10px;	
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Heading Controls~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ controls.css END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Lex.css ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+html{
+    background-color:blanchedalmond;
+    font-size: 100%;
+/*    text-align: center;*/
+}
+
+#instructions, #informedConsent{
+    width:800px;
+    margin: auto;
+    text-align: left;
+}
+
+#instructionsBtn{
+    	margin: auto;
+}
+
+#canvas{
+	border: 2px solid black;
+	border-radius: 25px;
+	background-image: radial-gradient(ellipse farthest-corner at left bottom, #4DA0FF 0%, #73ABFF 25%, #4DA0FF 50%, #73ABFF 75%, #4DA0FF 100%);
+}
+
+#canvasContainer{
+	position: relative;
+	text-align: center;
+	height: 600px;
+	width: 600px;
+}
+
+.canvas { position: absolute; top: 0; left: 0; }
+
+
+.hidden, .placeHolder, #controlMessage, #instructions, #endOfTask, #submitButton, #mainContatiner, #cumulativeResults{
+	display: none;
+}
+
+/*
+.hidden, .placeHolder, #controlMessage, #instructions, #endOfTask, #submitButton, #informedConsent, #cumulativeResults{
+	display: none;
+}
+*/
+
+#confidence, #confidenceP2 {
+	width: 250px;
+}
+
+#searchSize{
+	width: 400px;
+}
+
+.TestBox {
+	height: 100px;
+	width: 1000px;
+}
+
+#testInformation, #ResultsContainer{
+	background: grey;
+	border: 2px solid grey;
+}
+
+#mainContatiner {
+/*	border: 2px solid black;*/
+	height: 604px;
+	width: 1032px;
+	margin: auto;
+	margin-top: 30px;
+}
+
+#game {
+	float: left;
+	position: relative;
+	display: inline-block;
+}
+
+#endOfTask{
+	border: 2px solid grey;
+	height: 470px;
+	width: 600px;
+	margin: auto;
+	background-color: lightgrey;
+	padding: 10px 10px 0px 10px;
+	border-radius: 15px;
+}
+
+#feedBack{
+	text-align: center;
+	margin: 10px 10px 0px 25px;
+	height: 200px;
+	width: 550px;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Lex.css END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+</style>
